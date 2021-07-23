@@ -1,0 +1,13 @@
+.bd-users-nav-chat {
+    height: calc(100vh - 10em);
+    align-items: start !important;
+    flex-wrap: wrap !important;
+    overflow-y: auto;
+}
+
+
+@media (min-width: 576px) {
+    .bd-sidebar  {
+        width: 200px
+    }
+}
