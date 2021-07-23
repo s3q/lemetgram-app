@@ -32,9 +32,10 @@ import { updateLoginApiContext, autoLoginApiContext } from "./ApiContext"
 
 
 const updateLogin = async (dispatch) => {
+    await updateLoginApiContext(dispatch)
     setInterval(async () => {
         await updateLoginApiContext(dispatch)
-    }, 10000)
+    }, 20000)
 }
 
 
@@ -44,7 +45,7 @@ function App() {
 
     useEffect(async () => {
         await autoLoginApiContext(context.dispatch)
-        // await updateLogin(context.dispatch)
+        await updateLogin(context.dispatch)
     }, []);
 
     const handleRedirect = () => {
