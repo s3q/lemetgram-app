@@ -2,7 +2,7 @@ import axios from "axios"
 import url_join from "url-join"
 import { v4 as uuidv4 } from "uuid"
 
-const proxy = "https://lemetgram-api.herokuapp.com/api/"
+const proxy = "https://lemetgram-api.herokuapp.com/api"
 
 const public_default_url = "https://lemetgram-app.herokuapp.com/assets/data/default/"
 const public_posts_url = "https://lemetgram-app.herokuapp.com/assets/data/posts/"
