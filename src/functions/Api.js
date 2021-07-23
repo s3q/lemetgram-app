@@ -52,18 +52,18 @@ function reverseResArray(obj) {
 
 // ! AUTH API :
 const registerUser = async (userData) => {
-    return await axios.post(`/auth/register`, userData)
+    return await axios.post(`${proxy}/auth/register`, userData)
 }
 
 const loginUser = async ({ userEmail, userPassword }) => {
-    const res = await axios.post(`/auth/login`, { email: userEmail, password: userPassword })
+    const res = await axios.post(`${proxy}/auth/login`, { email: userEmail, password: userPassword })
     res.data = addPathToMedia(res.data, "user")
     return res
 }
 
 
 const saveLoginUser = async ({ userEmail, userPassword }) => {
-    const res = await axios.post(`/auth/save_login`, { email: userEmail, password: userPassword })
+    const res = await axios.post(`${proxy}/auth/save_login`, { email: userEmail, password: userPassword })
     res.data._id = res.data.user_id
     return res
 }
@@ -72,7 +72,7 @@ const saveLoginUser = async ({ userEmail, userPassword }) => {
 
 const fetchSaveLoginUser = async (loginId, userId) => {
 
-    const res = await axios.post(`/auth/auto_login`, { loginId: loginId, userId: userId })
+    const res = await axios.post(`${proxy}/auth/auto_login`, { loginId: loginId, userId: userId })
     // res.data.session_id = res.data._id
     res.data._id = userId
     return res
@@ -83,7 +83,7 @@ const fetchSaveLoginUser = async (loginId, userId) => {
 
 const deleteLoginUser = async (loginId, userId) => {
 
-    const res = await axios.delete(`/auth/delete_login`, { params: { loginId: loginId, userId: userId } })
+    const res = await axios.delete(`${proxy}/auth/delete_login`, { params: { loginId: loginId, userId: userId } })
     // res.data.session_id = res.data._id
     return res
 
@@ -92,7 +92,7 @@ const deleteLoginUser = async (loginId, userId) => {
 
 const updateLoginUser = async (loginId, userId) => {
 
-    const res = await axios.put(`/auth/update_login`, { loginId: loginId, userId: userId })
+    const res = await axios.put(`${proxy}/auth/update_login`, { loginId: loginId, userId: userId })
     // res.data.session_id = res.data._id
     res.data._id = userId
     return res
@@ -105,7 +105,7 @@ const updateLoginUser = async (loginId, userId) => {
 const updateUser = async (id, _userId, updateData) => {
     const { userId, createdAt, updatedAt, __v, _id, ..._updateData } = updateData
 
-    return await axios.put(`/users/${id}`, { userId: _userId, ..._updateData })
+    return await axios.put(`${proxy}/users/${id}`, { userId: _userId, ..._updateData })
 
 }
 
@@ -149,36 +149,34 @@ const updateUserImg = async (id, _userId, updateData, formData) => {
 
 
 const deleteUser = async (id, userId) => {
-    return await axios.delete(`/users/${id}`, { params: { userId: userId } })
+    return await axios.delete(`${proxy}/users/${id}`, { params: { userId: userId } })
 }
 
 const fetchUser = async (id_user, type = "id") => {
-    const res = await axios.get(`/users/${id_user}/${type}`)
+    const res = await axios.get(`${proxy}/users/${id_user}/${type}`)
     res.data = addPathToMedia(res.data, "user")
     return res
 }
 
 
 const followUser = async (id, userId) => {
-    return await axios.put(`/users/${id}/follow`, { userId: userId })
+    return await axios.put(`${proxy}/users/${id}/follow`, { userId: userId })
 }
 
 
 const unfollowUser = async (id, userId) => {
-    return await axios.put(`/users/${id}/unfollow`, { userId: userId })
+    return await axios.put(`${proxy}/users/${id}/unfollow`, { userId: userId })
 }
 
 const fetchAllUsers = async () => {
-    const res = await axios.get(`https://lemetgram-api.herokuapp.com/api/users/get_all_users`)
+    const res = await axios.get(`${proxy}/users/get_all_users`)
     // res.data = reverseResArray(res.data)
     // res.data.map(resData => {
     //     resData = addPathToMedia(resData, "user")
     // })
-    console.log(res.data)
     return res
 }
 
-fetchAllUsers()
 
 // ! POST API :
 const createPost = async (postData, formData) => {
@@ -207,33 +205,33 @@ const createPost = async (postData, formData) => {
 
 const updatePost = async (id, _userId, updateData) => {
     const { userId, createdAt, updatedAt, __v, _id, ..._updateData } = updateData
-    return await axios.put(`/posts/${id}`, { userId: _userId, ..._updateData })
+    return await axios.put(`${proxy}/posts/${id}`, { userId: _userId, ..._updateData })
 }
 
 const updatePostImg = async (id, _userId, updateData) => {
     const { userId, createdAt, updatedAt, __v, _id, ..._updateData } = updateData
-    return await axios.put(`/posts/${id}/set_img`, { userId: _userId, ..._updateData })
+    return await axios.put(`${proxy}/posts/${id}/set_img`, { userId: _userId, ..._updateData })
 }
 
 const deletePost = async (id, userId) => {
-    return await axios.delete(`/posts/${id}`, { params: { userId: userId } })
+    return await axios.delete(`${proxy}/posts/${id}`, { params: { userId: userId } })
 }
 
 
 const likePost = async (id, userId) => {
-    return await axios.put(`/posts/${id}/like`, { userId: userId })
+    return await axios.put(`${proxy}/posts/${id}/like`, { userId: userId })
 }
 
 
 const fetchPost = async (id) => {
-    const res = await axios.get(`/posts/${id}`)
+    const res = await axios.get(`${proxy}/posts/${id}`)
     res.data = addPathToMedia(res.data, "post")
     return res
 }
 
 
 const fetchUserPosts = async (userId) => {
-    const res = await axios.get(`/posts/timeline/user/${userId}`)
+    const res = await axios.get(`${proxy}/posts/timeline/user/${userId}`)
     res.data = reverseResArray(res.data)
     res.data.map(resData => {
         resData = addPathToMedia(resData, "post")
@@ -243,7 +241,7 @@ const fetchUserPosts = async (userId) => {
 
 
 const fetchUserPostsId = async (userId) => {
-    const res = await axios.get(`/posts/timeline/user_posts_id/${userId}`)
+    const res = await axios.get(`${proxy}/posts/timeline/user_posts_id/${userId}`)
     res.data = reverseResArray(res.data)
     res.data.map(resData => {
         resData = addPathToMedia(resData, "post")
@@ -252,7 +250,7 @@ const fetchUserPostsId = async (userId) => {
 }
 
 const fetchFuserPosts = async (userId) => {
-    const res = await axios.get(`/posts/timeline/fuser/${userId}`)
+    const res = await axios.get(`${proxy}/posts/timeline/fuser/${userId}`)
     res.data = reverseResArray(res.data)
     res.data.map(resData => {
         resData = addPathToMedia(resData, "post")
@@ -261,7 +259,7 @@ const fetchFuserPosts = async (userId) => {
 }
 
 const fetchFuserPostsId = async (userId) => {
-    const res = await axios.get(`/posts/timeline/fuser_posts_id/${userId}`)
+    const res = await axios.get(`${proxy}/posts/timeline/fuser_posts_id/${userId}`)
     res.data = reverseResArray(res.data)
     res.data.map(resData => {
         resData = addPathToMedia(resData, "post")
@@ -271,7 +269,7 @@ const fetchFuserPostsId = async (userId) => {
 
 
 const fetchAllPosts = async (userId) => {
-    const res = await axios.get(`/posts/timeline/all/${userId}`)
+    const res = await axios.get(`${proxy}/posts/timeline/all/${userId}`)
     res.data = reverseResArray(res.data)
     res.data.map(resData => {
         resData = addPathToMedia(resData, "post")
@@ -280,7 +278,7 @@ const fetchAllPosts = async (userId) => {
 }
 
 const fetchAllPostsId = async (userId) => {
-    const res = await axios.get(`/posts/timeline/all_posts_id/${userId}`)
+    const res = await axios.get(`${proxy}/posts/timeline/all_posts_id/${userId}`)
     res.data = reverseResArray(res.data)
     res.data.map(resData => {
         resData = addPathToMedia(resData, "post")
@@ -292,44 +290,44 @@ const fetchAllPostsId = async (userId) => {
 // ! UPLOAD :
 
 const uploadPostImage = async (filename, userId, formData) => {
-    return await axios.post(`/upload/post/${userId}/${filename}`, formData)
+    return await axios.post(`${proxy}/upload/post/${userId}/${filename}`, formData)
 }
 
 const uploadUserImage = async (filename, userId, formData) => {
-    return await axios.post(`/upload/user/${userId}/${filename}`, formData)
+    return await axios.post(`${proxy}/upload/user/${userId}/${filename}`, formData)
 }
 
 
 // ! CONVERSATION :
 const createConversation = async (senderId, receiverId) => {
-    const res = await axios.post(`/conversation`, { senderId: senderId, receiverId: receiverId })
+    const res = await axios.post(`${proxy}/conversation`, { senderId: senderId, receiverId: receiverId })
     return res
 }
 
 const getConversation = async (currentUser, secondUser) => {
-    const res = await axios.get(`/conversation/${currentUser}/${secondUser}`)
+    const res = await axios.get(`${proxy}/conversation/${currentUser}/${secondUser}`)
     return res
 }
 
 
 const getConversationByid = async (conversationId, currentUser) => {
-    const res = await axios.post(`/conversation/conv/${conversationId}`, { currentUser: currentUser})
+    const res = await axios.post(`${proxy}/conversation/conv/${conversationId}`, { currentUser: currentUser})
     return res
 }
 
 const getUserConversations = async (userId) => {
-    const res = await axios.get(`/conversation/user/${userId}`)
+    const res = await axios.get(`${proxy}/conversation/user/${userId}`)
     return res
 }
 
 // ! MESSAGE :
 const createMessage = async (conversationId, senderId, text) => {
-    const res = await axios.post(`/message`, { conversationId: conversationId, senderId: senderId, text: text })
+    const res = await axios.post(`${proxy}/message`, { conversationId: conversationId, senderId: senderId, text: text })
     return res
 }
 
 const getConversationMessages = async (conversationId, currentUser, secondUser) => {
-    const res = await axios.post(`/message/${conversationId}`, { currentUser: currentUser, secondUser: secondUser })
+    const res = await axios.post(`${proxy}/message/${conversationId}`, { currentUser: currentUser, secondUser: secondUser })
     return res
 }
 
