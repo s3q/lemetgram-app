@@ -169,14 +169,16 @@ const unfollowUser = async (id, userId) => {
 }
 
 const fetchAllUsers = async () => {
-    const res = await axios.get(`/users/get_all_users`)
+    const res = await axios.get(`https://lemetgram-api.herokuapp.com/api/users/get_all_users`)
     // res.data = reverseResArray(res.data)
     // res.data.map(resData => {
     //     resData = addPathToMedia(resData, "user")
     // })
+    console.log(res.data)
     return res
 }
 
+fetchAllUsers()
 
 // ! POST API :
 const createPost = async (postData, formData) => {
