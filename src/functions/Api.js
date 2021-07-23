@@ -138,7 +138,7 @@ const updateUserImg = async (id, _userId, updateData, formData) => {
                 uploadUserImage(fileName, _userId, newFormData).then(async res => {
                     console.log(res)
                     if (res.status == 200)
-                        return await axios.put(`/users/${id}/set_img`, { userId: _userId, ..._updateData })
+                        return await axios.put(`${proxy}/users/${id}/set_img`, { userId: _userId, ..._updateData })
                 })
             }
         }
@@ -196,7 +196,7 @@ const createPost = async (postData, formData) => {
             await uploadPostImage(fileName, postData.userId, formData).then(async res => {
                 console.log(res)
                 if (res.status == 200)
-                    return await axios.post(`/posts/`, postData)
+                    return await axios.post(`${proxy}/posts/`, postData)
             })
         }
     }
