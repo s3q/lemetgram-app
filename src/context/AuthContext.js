@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
     const [usersIsConnected, setUsersIsConnected] = useState([])
     const [socket, setSocket] = useState([])
       
-    useEffect(() => setSocket(io("ws://lemetgram-socket.herokuapp.com")), [])
+    useEffect(() => setSocket(io("https://lemetgram-socket.herokuapp.com")), [])
 
     useEffect(() => {
         
