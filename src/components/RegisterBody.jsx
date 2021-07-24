@@ -46,6 +46,20 @@ export default function RegisterBody() {
     const ALLOWED_IMG = ["image/png", "image/jpeg"]
     const ALLOWED_IMG_SIZE = 5
 
+    function checkUserValidate(username) {
+        let validcharacters = '1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        let usernameCheck = username.split("")
+        usernameCheck = usernameCheck.map(uchar => validcharacters.includes(uchar))
+        console.log(usernameCheck)
+        if (usernameCheck.includes(false)) {
+            return false
+        } else {
+            return true
+        }
+
+    }
+
     const handleSubmit = async (event) => {
         setOpenBackdrop(true)
         event.preventDefault()
@@ -54,6 +68,10 @@ export default function RegisterBody() {
 
             if (inputPassword.current.value != inputPasswordConfirmation.current.value) {
                 return inputPasswordConfirmation.current.setCustomValidity("Password don't match!")
+            }
+
+            if (!checkUserValidate(inputUsername.current.value)) {
+                return inputUsername.current.setCustomValidity("Validate user")
             }
 
 
@@ -73,12 +91,6 @@ export default function RegisterBody() {
             try {
                 setIsFetching(true)
 
-                if (coverImg != {}) coverImg.id = "coverImg"
-                if (profileImg != {}) profileImg.id = "profileImg"
-
-                const fromData = new FormData()
-                fromData.append("coverImg", coverImg)
-                fromData.append("profileImg", profileImg)
 
                 console.log(userData)
 
@@ -86,17 +98,29 @@ export default function RegisterBody() {
                 await Api.registerUser(userData).then(async res => {
                     console.log(res)
                     if (res.status == 200) {
-                        const imgData = {
-                            set: true
+
+                        if (coverImg && profileImg) {
+
+                            const imgData = {
+                                set: true
+                            }
+
+
+                            if (coverImg != {}) coverImg.id = "coverImg"
+                            if (profileImg != {}) profileImg.id = "profileImg"
+
+                            const fromData = new FormData()
+                            fromData.append("coverImg", coverImg)
+                            fromData.append("profileImg", profileImg)
+
+                            if (coverImg != {}) imgData.coverImg = ""
+                            if (profileImg != {}) imgData.profileImg = ""
+
+                            console.log(imgData)
+
+                            await Api.updateUserImg(res.data._id, res.data._id, imgData, fromData)
+
                         }
-
-                        if (coverImg != {}) imgData.coverImg = ""
-                        if (profileImg != {}) imgData.profileImg = ""
-
-                        console.log(imgData)
-
-                        await Api.updateUserImg(res.data._id, res.data._id, imgData, fromData)
-
 
                         let userCredentials = {
                             userEmail: inputEmail.current.value,
