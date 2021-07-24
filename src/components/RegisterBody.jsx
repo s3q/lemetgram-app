@@ -91,8 +91,8 @@ export default function RegisterBody() {
             try {
                 setIsFetching(true)
 
-                if (coverImg != {}) coverImg.id = "coverImg"
-                if (profileImg != {}) profileImg.id = "profileImg"
+                // if (coverImg != {}) coverImg.id = "coverImg"
+                // if (profileImg != {}) profileImg.id = "profileImg"
 
                 const fromData = new FormData()
                 fromData.append("coverImg", coverImg)
@@ -112,8 +112,8 @@ export default function RegisterBody() {
                                 set: true
                             }
 
-                            if (coverImg != {}) imgData.coverImg = ""
-                            if (profileImg != {}) imgData.profileImg = ""
+                            // if (coverImg != {}) imgData.coverImg = ""
+                            // if (profileImg != {}) imgData.profileImg = ""
     
                             console.log(imgData)
     
