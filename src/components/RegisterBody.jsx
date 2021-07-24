@@ -91,6 +91,12 @@ export default function RegisterBody() {
             try {
                 setIsFetching(true)
 
+                if (coverImg != {}) coverImg.id = "coverImg"
+                if (profileImg != {}) profileImg.id = "profileImg"
+
+                const fromData = new FormData()
+                fromData.append("coverImg", coverImg)
+                fromData.append("profileImg", profileImg)
 
                 console.log(userData)
 
@@ -98,25 +104,19 @@ export default function RegisterBody() {
                 await Api.registerUser(userData).then(async res => {
                     console.log(res)
                     if (res.status == 200) {
-
+                        console.log(coverImg, profileImg)
+                        console.log(!coverImg, !profileImg)
                         if (coverImg && profileImg) {
 
                             const imgData = {
                                 set: true
                             }
 
-
-                            if (coverImg != {}) coverImg.id = "coverImg"
-                            if (profileImg != {}) profileImg.id = "profileImg"
-
-                            const fromData = new FormData()
-                            fromData.append("coverImg", coverImg)
-                            fromData.append("profileImg", profileImg)
-
                             if (coverImg != {}) imgData.coverImg = ""
                             if (profileImg != {}) imgData.profileImg = ""
-
+    
                             console.log(imgData)
+    
 
                             await Api.updateUserImg(res.data._id, res.data._id, imgData, fromData)
 
@@ -136,7 +136,7 @@ export default function RegisterBody() {
                 })
 
             } catch (err) {
-
+                setIsFetching(false)
             }
         }
     }
@@ -251,11 +251,11 @@ export default function RegisterBody() {
                             <hr />
                             <div className="col-md-12 mb-5">
                                 <label for="inputProfileImg" className="form-label">Profile Image</label>
-                                <input type="file" className="form-control" id="inputProfileImg" onChange={handleUpload} placeholder="profile image" accept="image/png, image/jpeg" ref={inputProfileImg} />
+                                <input type="file" className="form-control" id="inputProfileImg" onChange={handleUpload} placeholder="profile image" accept="image/png, image/jpeg" ref={inputProfileImg} required />
                             </div>
                             <div className="col-md-12 mb-5">
                                 <label for="inputCoverImg" className="form-label">Cover Image</label>
-                                <input type="file" className="form-control" id="inputCoverImg" onChange={handleUpload} placeholder="profile image" accept="image/png, image/jpeg" ref={inputCoverImg} />
+                                <input type="file" className="form-control" id="inputCoverImg" onChange={handleUpload} placeholder="profile image" accept="image/png, image/jpeg" ref={inputCoverImg} required />
                             </div>
 
                             <div id="preview">
