@@ -104,7 +104,9 @@ export default function RegisterBody() {
                         if (coverImg && profileImg) {
 
                             const imgData = {
-                                set: true
+                                set: true,
+                                coverImg: "",
+                                profileImg: ""
                             }
 
 
@@ -114,9 +116,7 @@ export default function RegisterBody() {
 
                             console.log(userData)
 
-                            // if (coverImg != {}) imgData.coverImg = ""
-                            // if (profileImg != {}) imgData.profileImg = ""
-
+    
                             console.log(imgData)
 
 
