@@ -102,7 +102,7 @@ export default function ChatBody() {
         Promise.all(conversations.map(c => {
             c.members.map(m => {
                 if (m != context.user._id) {
-                    Api.fetchUser(m).then(res => {
+                    return Api.fetchUser(m).then(res => {
                         if (res.status == 200 && res.data._id) {
                             let usersConversationsWithAv = Object.create(usersConversationsWith)
 
@@ -126,32 +126,38 @@ export default function ChatBody() {
                             }
 
 
-                            setUsersConversationsWith(usersConversationsWithAv)
-
+                            setUsersConversationsWith(prev => {
+                                return {...prev, ...usersConversationsWithAv}
+                            })
                         }
                     })
                 }
             })
-        }))
+        })).then(() => {
+
+        })
 
     }
 
     const getConversation = async () => {
-        await Api.getConversationByid(conversationId, context.user._id).then(async res => {
-
-            let usersConversationMessagesWithAv = Array.from(usersConversationMessagesWith)
-            await Promise.all(res.data.members.map(async mId => {
-                if (!usersConversationMessagesWithAv.some(value => value._id == mId)) {
-                    await Api.fetchUser(mId).then(res => {
-                        usersConversationMessagesWithAv.push(res.data)
+        if (conversationId) {
+            await Api.getConversationByid(conversationId, context.user._id).then(async res => {
+                if (res.status == 200 && res.data) {
+                    let usersConversationMessagesWithAv = Array.from(usersConversationMessagesWith)
+                    await Promise.all(res.data.members.map(async mId => {
+                        if (!usersConversationMessagesWithAv.some(value => value._id == mId)) {
+                            await Api.fetchUser(mId).then(res => {
+                                usersConversationMessagesWithAv.push(res.data)
+                            })
+                        }
+                    })).then(() => {
+                        setUsersConversationMessageWith(usersConversationMessagesWithAv)
                     })
-                }
-            })).then(() => {
-                setUsersConversationMessageWith(usersConversationMessagesWithAv)
-            })
 
-            setConversation(res.data)
-        })
+                    setConversation(res.data)
+                }
+            })
+        }
     }
 
 
@@ -221,7 +227,6 @@ export default function ChatBody() {
                 })
 
                 const receiverId = conversation.members.find(member => member != context.user._id)
-                console.log(receiverId)
                 context.socket.emit("sendMessage", {
                     senderId: context.user._id,
                     receiverId: receiverId,
@@ -234,18 +239,19 @@ export default function ChatBody() {
     const handleNewConversation = async (e) => {
         const username = e.target.textContent.trim()
         await Api.fetchUser(username, "username").then(res => {
-            console.log(res.data)
             let userId = res.data._id
-            console.log(userId)
             try {
-                Api.getConversation(context.user._id, userId ).then(resConv => {
-                    if (resConv.status == 200 && resConv.data)
+                Api.getConversation(context.user._id, userId).then(resConv => {
+                    if (resConv.status == 200 && resConv.data) {
                         history.push(`/chat/${resConv.data._id}`)
-                    else Api.createConversation(context.user._id, userId).then(resConv2 => {
-                        if (resConv2.status == 200 && resConv2.data)
-                            history.push(`/chat/${resConv2.data._id}`)
-                        setConversation(prev => [...prev, resConv2.data])
-                    })
+                    }
+                    else {
+                        Api.createConversation(context.user._id, userId).then(resConv2 => {
+                            if (resConv2.status == 200 && resConv2.data)
+                                history.push(`/chat/${resConv2.data._id}`)
+                            setConversation(prev => [...prev, resConv2.data])
+                        })
+                    }
                 })
             } catch (err) {
                 Api.createConversation(context.user._id, userId).then(resConv => {
