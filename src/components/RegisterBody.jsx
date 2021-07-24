@@ -94,11 +94,6 @@ export default function RegisterBody() {
                 // if (coverImg != {}) coverImg.id = "coverImg"
                 // if (profileImg != {}) profileImg.id = "profileImg"
 
-                const fromData = new FormData()
-                fromData.append("coverImg", coverImg)
-                fromData.append("profileImg", profileImg)
-
-                console.log(userData)
 
 
                 await Api.registerUser(userData).then(async res => {
@@ -112,11 +107,18 @@ export default function RegisterBody() {
                                 set: true
                             }
 
+
+                            const fromData = new FormData()
+                            fromData.append("coverImg", coverImg)
+                            fromData.append("profileImg", profileImg)
+
+                            console.log(userData)
+
                             // if (coverImg != {}) imgData.coverImg = ""
                             // if (profileImg != {}) imgData.profileImg = ""
-    
+
                             console.log(imgData)
-    
+
 
                             await Api.updateUserImg(res.data._id, res.data._id, imgData, fromData)
 
