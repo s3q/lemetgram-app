@@ -1,0 +1,163 @@
+/*aside bar*/
+/* .bd-users-nav-chat {
+    height: calc(100vh - 10em);
+    align-items: start !important;
+    flex-wrap: wrap !important;
+    overflow-y: auto;
+}
+
+
+@media (min-width: 576px) {
+    .bd-sidebar  {
+        width: 200px
+    }
+} */
+
+
+.bd-users-nav-chat {
+    height: calc(100vh - 10em);
+    align-items: start !important;
+    flex-wrap: wrap !important;
+    overflow-y: auto;
+}
+
+
+@media (min-width: 576px) {
+    .bd-sidebar  {
+        width: 200px
+    }
+}
+
+
+
+/* chat box */
+/* #message_box {
+    height: calc(100vh - 10em);
+    overflow-y: auto;
+    padding-bottom: 100px;
+}
+
+#info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 5px;
+}
+
+
+
+.nav-form {
+    box-shadow: 0 0 2rem rgb(0 0 0 / 20%) !important;
+    bottom: 70px;
+    margin-right: 10px;
+}
+
+
+
+.puser {
+    border-radius: 10px;
+    padding: .5rem;
+    color: #000000;
+    border: 2px solid #dee2e6;
+}
+
+.msg {
+    width: 160px;
+    max-width: 300px; 
+    word-break: break-all;
+    border-radius: 10px;
+    width: max-content;
+    color: #000000;
+    padding: .5rem;
+}
+
+.msgbox {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+}
+
+.puO, .puT {
+    margin-bottom: 1rem;
+}
+
+.puO .msg {
+    background-color: #cacaca;
+}
+
+.puT {
+    flex-direction: row-reverse;
+}
+
+.puT .msg {
+    
+    background-color: #c7d4ff;
+} */
+
+
+
+
+#message_box {
+    height: calc(100vh - 10em);
+    overflow-y: auto;
+    padding-bottom: 100px;
+}
+
+#info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 5px;
+}
+
+
+
+.nav-form {
+    box-shadow: 0 0 2rem rgb(0 0 0 / 20%) !important;
+    bottom: 70px;
+    margin-right: 10px;
+}
+
+
+
+.puser {
+    border-radius: 10px;
+    padding: .5rem;
+    color: #000000;
+    border: 2px solid #dee2e6;
+}
+
+.msg {
+    width: 160px;
+    max-width: 300px; 
+    word-break: break-all;
+    border-radius: 10px;
+    width: max-content;
+    color: #000000;
+    padding: .5rem;
+}
+
+.msgbox {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+}
+
+.puO, .puT {
+    margin-bottom: 1rem;
+}
+
+.puO .msg {
+    background-color: #cacaca;
+}
+
+.puT {
+    flex-direction: row-reverse;
+}
+
+.puT .msg {
+    
+    background-color: #c7d4ff;
+}
